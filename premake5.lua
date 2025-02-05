@@ -52,7 +52,8 @@ flags { "Verbose" }
     filter "system:linux"
         buildoptions { " -msse4.1", "-msse4.2","-mavx", "-mavx2", "-mavx512f", "-mavx512dq", "-m64", "-march=native" }
 
-    
+    filter "system:windows"
+        buildoptions { "/arch:AVX2","/arch:AVX512" }
 
     filter "configurations:Release"
         buildoptions { "-O3", "-msse4.1", "-mavx2", "-m64" }  -- Release-specific optimizations
@@ -64,10 +65,12 @@ flags { "Verbose" }
     -- Debug and Release configurations
     filter "configurations:Debug"
         runtime "Debug"
+        staticruntime "Off" -- Change from "On" to "Off" to match MDd
         symbols "On"
 
     filter "configurations:Release"
         runtime "Release"
+        staticruntime "Off" -- Change from "On" to "Off" to match MDd
         optimize "On"
 
 
